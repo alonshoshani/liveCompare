@@ -11,5 +11,13 @@ app.post('/addDelta', function(req, res) {
 
 
  
-app.listen(3000);
+var io = require('socket.io').listen(app.listen(3000));
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('message', { message: 'welcome to the chat' });
+    socket.on('send', function (data) {
+        io.sockets.emit('message', data);
+    });
+});
+
 console.log('Listening on port 3000...');
