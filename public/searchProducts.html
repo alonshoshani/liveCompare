@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/css/bootstrap.min.css">
+    <title>This is Email Page</title>
+    <script src="js/jquery-1.10.1.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1>Products</h1>
+		<hr/>
+		<div class="page"></div>
+	</div>
+	
+	
+	<script type="text/template" id="product-template">
+	<h4>Products List</h4>
+	<table class="table striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Company</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% _.each(products,function(product){%>
+				<tr>
+					<td><%= product.get('name') %></td>
+					<td><%= product.get('price') %></td>
+					<td><%= product.get('store')['name'] %></td>
+					<td><a target="_blank" href="<%= product.get('link') %>" class="btn btn-primary">Buy now!</a>
+				</tr>
+			
+			<%});%>
+		
+		</tbody>
+	</table
+	
+	</script>
+	
+	<script>
+		
+		var Products= Backbone.Collection.extend({});
+		var products=new Products(
+					[{name:'a',price:'1',store:{name:'f',link:'http://www.zolyoter.co.il'},link:'http://zolyoter.co.il/shopexd.asp?id=2069'
+					 }]
+				)
+		
+		var ProductList= Backbone.View.extend({
+			el:'.page',
+			render: function(){
+				var that=this;
+				var template=_.template($('#product-template').html(),{products:products.models});
+				this.$el.html(template);
+			}
+		
+		});
+		
+		
+		var Router=Backbone.Router.extend({
+			routes:{
+					'':'home'
+			}
+		})
+		
+		var productList= new ProductList();
+		var router=new Router();
+		router.on('route:home',function(){
+			productList.render();
+		});
+		
+		Backbone.history.start();
+	</script>
+</body>
+
+</html>

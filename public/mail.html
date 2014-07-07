@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>This is Email Page</title>
+    <script src="js/jquery-1.10.1.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+</head>
+<body>
+<!--body content-->
+
+
+<div class="container">
+    <div class="row">
+        <div class="span8">
+            <!--here the user name will be thorough the view-->
+            <div id="user_details" class="front"></div>
+        </div>
+    </div>
+    <div class="mainmail">
+        <table class="table table-hover front" id="mails_details">
+            <thead>
+            <tr class="tableheader">
+                <th style="width: 55%;">Name</th>
+                <th style="width: 40%;">Price</th>
+                <th style="width: 15%;">Store</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<!--all templates-->
+
+<script id="productTemplate" type="text/template">
+    <td style="width: 35%;"><%=productName %></td>
+    <td style="width: 30%;"><%=price%></td>
+
+    <td style="width: 5%;">
+        <button class="details pure-button">
+            <span class="fui-mail"></span>
+        </button>
+    </td>
+    <td style="width: 5%;">
+        <button class="delete pure-button">
+            <span class="fui-cross"></span>
+        </button>
+    </td>
+    <td style="width: 5%;">
+        <a data-toggle="modal" href="#myModal">
+            <button type="button" class="reply pure-button">
+                <span class="fui-chat"></span>
+            </button>
+        </a>
+    </td>
+</script>
+<!--end templates-->
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/backbone/mail.js"></script>
+<script src="js/backbone/models.js"></script>
+<script src="js/backbone/views.js"></script>
+<script src="js/backbone/collections.js"></script>
+<script src="js/backbone/router.js"></script>
+</body>
+</html>
