@@ -7,7 +7,7 @@ dal.connect("products");
 dal.addProduct(
 	{ name:"aaa",
 	  words:[{word:"a"},{word:"b"}],
-	  prices:[{store:"aaa",price:555},{store:"bbb",price:666}]
+	  prices:[{store:"aaa",price:555,link:"linknini"},{store:"bbb",price:666,link:"linknini"}]
 	});
 
  
@@ -30,10 +30,11 @@ app.get('/addDeltass', function(req, res) {
   //  res.send("file");
 });
 
-app.get('/getListProduct',function(req,res){
-	console.log(dal.getProduct("aaa",function(data){
+app.post('/getListProduct',function(req,res){
+	var productName=req.body.productName;
+	dal.getProduct(productName,function(data){
 		res.send(data);
-	}));
+	});
 });
  
 var io = require('socket.io').listen(app.listen(3000));

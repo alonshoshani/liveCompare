@@ -19,6 +19,6 @@ $(function() {
 	
 	//model for one product
 	App.Models.product = Backbone.Model.extend({
-      
+		urlRoot:'/getListProduct'
     });
 })

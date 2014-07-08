@@ -11,7 +11,7 @@ function connect(dbname){
 	var productSchema=new mongoose.Schema({
 		name: String,
 		words:[{word:String}],
-		prices:[{store:String,price:Number}]
+		prices:[{store:String,price:Number,link:String}]
 	})
 	
 	Product = mongoose.model('products',productSchema);
@@ -29,8 +29,17 @@ function addProduct(product){
 }
 
 function getProduct(name,callback){
-	Product.find({name: name},function(err,fetchedProducts){
-		callback(fetchedProducts);
+	Product.find({name: name}).select({_id:0,prices:1}).limit(1).exec(
+	function(err,fetchedProducts){
+		if (err) {// ...
+            console.log(err);
+		}else{
+			if (fetchedProducts.length===0){
+				callback(fetchedProducts);
+			}else{
+				callback(fetchedProducts[0]['prices']);
+			}
+		}
 	});
 }
 

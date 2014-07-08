@@ -21,17 +21,18 @@
 	<table class="table striped">
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>Store</th>
 				<th>Price</th>
-				<th>Company</th>
+				<th>Link</th>
 			</tr>
 		</thead>
 		<tbody>
-			<% _.each(products,function(product){%>
+			
+			<% 
+			_.each(products,function(product){%>
 				<tr>
-					<td><%= product.get('name') %></td>
+					<td><%= product.get('store') %></td>
 					<td><%= product.get('price') %></td>
-					<td><%= product.get('store')['name'] %></td>
 					<td><a target="_blank" href="<%= product.get('link') %>" class="btn btn-primary">Buy now!</a>
 				</tr>
 			
@@ -44,20 +45,35 @@
 	
 	<script>
 		
-		var Products= Backbone.Collection.extend({});
-		var products=new Products(
-					[{name:'a',price:'1',store:{name:'f',link:'http://www.zolyoter.co.il'},link:'http://zolyoter.co.il/shopexd.asp?id=2069'
-					 }]
-				)
+		$.ajaxPrefilter(function(options,originalOptions,jqXHR){
+			options.url= 'http://localhost:3000' + options.url;
+		});
+		
+		var Products= Backbone.Collection.extend({
+			url:'/getListProduct'
+		});
+		
 		
 		var ProductList= Backbone.View.extend({
 			el:'.page',
 			render: function(){
 				var that=this;
-				var template=_.template($('#product-template').html(),{products:products.models});
-				this.$el.html(template);
+				var products=new Products();
+				products.fetch({
+					traditional: true,
+					data:{productName:"ddd"},
+					method:"post",
+					success:function(products){
+						if (products.models.length!==0){
+							var template=_.template($('#product-template').html(),{products:products.models});
+							that.$el.html(template);
+						}else{
+							that.$el.html("<div>No results were found</div>");
+						}
+						
+					}
+				});
 			}
-		
 		});
 		
 		
