@@ -1,17 +1,21 @@
 var express = require('express');
 var dal = require('./dal');
 
+var fs = require('fs');
+
+
  
 var app = express();
 
 dal.connect("products");
+/*
 dal.addProduct(
-	{ name:"aaa",
-	  words:[{word:"a"},{word:"b"}],
-	  prices:[{store:"aaa",price:555,link:"linknini"},{store:"bbb",price:666,link:"linknini"}]
+	{ name:"bbb",
+	  words:[{word:"bbb"},{word:"BBB"}],
+	  prices:[{store:"zolyoter",price:555,link:"linknini"},{store:"electrophoto",price:666,link:"linknini"}]
 	});
+	*/
 
- 
 app.use('/client',express.static(__dirname + '/public'));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -24,6 +28,20 @@ app.post('/addDelta', function(req, res) {
 	console.log("file name :"+fileName);
 	console.log("file path :"+filePath);
     res.send("true");
+	
+	
+	var file = filePath;
+ 
+	fs.readFile(file, 'utf8', function (err, data) {
+	  if (err) {
+		console.log('Error: ' + err);
+		return;
+	  }
+	 
+	  data = JSON.parse(data);
+	 
+	  console.dir(data);
+	});
 });
 
 app.get('/addDeltass', function(req, res) {
@@ -40,13 +58,12 @@ app.post('/getListProduct',function(req,res){
  
 var io = require('socket.io').listen(app.listen(3000));
 io.sockets.on('connection', function (socket) {
-    socket.emit('message', { message: 'welcome to the chat' });
-    socket.on('send', function (data) {
-        io.sockets.emit('message', data);
-    });
+    //socket.emit('message', { message: 'welcome to the chat' });
 });
 
-
+app.get('/tryemit', function(req, res) {
+	io.sockets.emit('updateProductsPrices', "bbb");
+});
 
 
 console.log('Listening on port 3000...');

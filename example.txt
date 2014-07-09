@@ -1,0 +1,5 @@
+{ "array":[
+			{"productName":"bbb","store":"newStore1","price":333,"link":"newLink1"},
+			{"productName":"bbb","store":"newStore2","price":111,"link":"newLink2"}
+			
+]}

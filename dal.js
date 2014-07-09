@@ -29,6 +29,15 @@ function addProduct(product){
 }
 
 function getProduct(name,callback){
+
+	Product.update({name:name},
+                    {$push:{ prices: {$each :[],
+                                       $sort:{price:1},
+                                   }
+                           }
+                    },function d(){console.log("aaaa")}
+	)
+
 	Product.find({name: name}).select({_id:0,prices:1}).limit(1).exec(
 	function(err,fetchedProducts){
 		if (err) {// ...
@@ -41,6 +50,7 @@ function getProduct(name,callback){
 			}
 		}
 	});
+
 }
 
 function createSchemas(){

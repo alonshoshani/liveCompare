@@ -8,6 +8,8 @@
 		"socket.io": "latest",
 		"mongoose":"latest",
 		"underscore":"latest",
-		"backbone-autocomplete":"latest"
+		"backbone-autocomplete":"latest",
+		"node-fs":"latest"
     }
 }
+

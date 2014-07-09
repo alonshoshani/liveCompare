@@ -89,7 +89,7 @@
 			},
 		
 			render: function(){
-				this.fetchProducts("aaa");
+				this.fetchProducts("");
 			},
 			
 			fetchProducts :function(name){
@@ -130,8 +130,11 @@
 		Backbone.history.start();
 		
 		var socket = io.connect('http://localhost:3000');
-		socket.on('message', function ss(data) {
-				console.log(data.message);
+		
+		//socket functions
+		socket.on('updateProductsPrices', function updateProduct(productName) {
+				console.log("update product " + productName);
+				productList.fetchProducts(productName);
 		});
 		
 		
