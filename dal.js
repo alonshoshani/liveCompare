@@ -13,11 +13,17 @@ function connect(dbname){
 		words:[{word:String}],
 		prices:[{store:String,price:Number,link:String}]
 	})
-	
+
 	Product = mongoose.model('products',productSchema);
-	
-	// for appfog
-	//mongoose.connect(process.env.MONGOLAB_URI);
+}
+
+function deleteStoreByProduct(product,store){
+	Product.update({name:product},{$pull : { prices : {store:store}}},function callbacl(err){
+	if (err){
+		console.log(err);
+	}else{
+		console.log("delete " + store +" from " +product)});
+	}
 }
 
 function addProduct(product){
@@ -211,6 +217,8 @@ function addMailToUser(userName,mail,callback){
 module.exports.connect = connect;
 module.exports.addProduct = addProduct;
 module.exports.getProduct = getProduct;
+module.exports.deleteStoreByProduct = deleteStoreByProduct;
+
 
 
 
