@@ -22,8 +22,17 @@ function deleteStoreByProduct(product,store){
 	if (err){
 		console.log(err);
 	}else{
-		console.log("delete " + store +" from " +product)});
-	}
+		console.log("delete " + store +" from " +product);
+	}})
+}
+
+function addStoreByProduct(product,details){
+	Product.update({name:product},{$push : { prices : details}},function callbacl(err){
+	if (err){
+		console.log(err);
+	}else{
+		console.log("push " + details +" from " +product);
+	}})
 }
 
 function addProduct(product){
@@ -218,6 +227,8 @@ module.exports.connect = connect;
 module.exports.addProduct = addProduct;
 module.exports.getProduct = getProduct;
 module.exports.deleteStoreByProduct = deleteStoreByProduct;
+module.exports.addStoreByProduct = addStoreByProduct;
+
 
 
 
