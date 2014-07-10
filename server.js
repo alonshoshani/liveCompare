@@ -14,7 +14,11 @@ dal.addProduct(
 	  words:[{word:"bbb"},{word:"BBB"}],
 	  prices:[{store:"zolyoter",price:555,link:"linknini"},{store:"electrophoto",price:666,link:"linknini"}]
 	});
-	*/
+*/
+
+/*dal.deleteStoreByProduct("bbb","electrophoto");*/
+	
+/*dal.addStoreByProduct("bbb",{store:"aaa",price:222,link:"ggg"});*/
 
 app.use('/client',express.static(__dirname + '/public'));
 app.use(express.logger('dev'));
@@ -29,9 +33,7 @@ app.post('/addDelta', function(req, res) {
 	console.log("file path :"+filePath);
     res.send("true");
 	
-	
 	var file = filePath;
- 
 	fs.readFile(file, 'utf8', function (err, data) {
 	  if (err) {
 		console.log('Error: ' + err);
